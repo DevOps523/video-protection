@@ -190,16 +190,14 @@ app.get('/api/stream/:token', async (req, res) => {
     });
     
     // Forward the content type
-    res.setHeader('Content-Type', videoResponse.headers['content-type']);
-    
-    // Set headers to prevent caching
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
     res.setHeader('Pragma', 'no-cache');
     res.setHeader('Expires', '0');
     
     // Add additional security headers
     res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+    // Replace SAMEORIGIN with Content-Security-Policy
+    res.setHeader('Content-Security-Policy', `frame-ancestors 'self' *.xyz www.popnovahq.xyz`);
     
     // Pipe the video stream to the response
     videoResponse.data.pipe(res);
