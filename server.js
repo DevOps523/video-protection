@@ -235,6 +235,17 @@ app.get('/assets/*', (req, res) => {
   res.send('// Empty asset');
 });
 
+app.get('/devtools', (req, res) => {
+  res.setHeader('Content-Type', 'application/javascript');
+  res.send('// Empty devtools response');
+});
+
+// Handle any devtools subpaths
+app.get('/devtools/*', (req, res) => {
+  res.setHeader('Content-Type', 'application/javascript');
+  res.send('// Empty devtools response');
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Video proxy server running on port ${port}`);
