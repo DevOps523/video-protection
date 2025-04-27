@@ -212,6 +212,29 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
+app.get('/assets/jwplayer/*/*', (req, res) => {
+  res.setHeader('Content-Type', 'application/javascript');
+  res.send('window.jwplayer = function() { return {setup: function() {}, on: function() {} }; };');
+});
+
+// Handle main.js requests 
+app.get('/assets/js/main.js', (req, res) => {
+  res.setHeader('Content-Type', 'application/javascript');
+  res.send('// Empty main.js');
+});
+
+// Handle player.js requests
+app.get('/assets/js/player.js', (req, res) => {
+  res.setHeader('Content-Type', 'application/javascript');
+  res.send('// Empty player.js');
+});
+
+// Generic handler for other asset requests
+app.get('/assets/*', (req, res) => {
+  res.setHeader('Content-Type', 'application/javascript');
+  res.send('// Empty asset');
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Video proxy server running on port ${port}`);
