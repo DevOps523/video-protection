@@ -1,0 +1,19 @@
+// render.yaml - Configuration file for Render deployment
+services:
+  - type: web
+    name: video-proxy-server
+    env: node
+    buildCommand: npm install
+    startCommand: node server.js
+    plan: free # Change to "starter" for production
+    envVars:
+      - key: SECRET_KEY
+        # Generate a secure random key during deployment
+        generateValue: true
+      - key: PORT
+        value: 10000
+      - key: NODE_ENV
+        value: production
+    autoDeploy: true
+    # healthCheckPath points to the endpoint that returns 200 OK
+    healthCheckPath: /health
